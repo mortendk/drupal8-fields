@@ -43,6 +43,18 @@
 
 <h1>Drupal8 Fields Default markup</h1>
 Following up on <a href="https://drupal.org/node/2214241">Field default markup - removing the divitis</a> on D.O ive made this page to document the changes.
+
+css used:
+<pre><code>
+  .field-item{ color: red;}
+  .field-label { color: blue;}
+  .field-items{ border: 1px dashed pink;}
+  .field-items .field-item{ color:green;}
+  .field-item > div { color: teal;}
+  .field-item .field-label{ color: purple;}
+</code></pre>
+
+
 <!--1 field no label -->
 <h2>1. field</h2>
 Markup:
@@ -140,9 +152,12 @@ Markup:
 
 <h3>css</h3>
 <pre>
-.field{}
-.field-items { border: 1px dashed pink}
-.field-items .field-item{ color:green}
+.field-item{ color: red;}
+.field-label { color: blue;}
+.field-items{ border: 1px dashed pink;}
+.field-items .field-item{ color:green;}
+.field-item > div { color: teal;}
+.field-item .field-label{ color: purple;}
 </pre>
 
 <!-- multiple label with multi values-->
@@ -171,6 +186,8 @@ Markup:
   .field-label { color: blue;}
   .field-items{ border: 1px dashed pink;}
   .field-items .field-item{ color:green;}
+  .field-item > div { color: teal;}
+  .field-item .field-label{ color: purple;}
 </pre>
 
 
