@@ -1,0 +1,178 @@
+<html>
+<head>
+  <title>Drupal8 twig: Field.html.twig output</title>
+</head>
+<body>
+<style type="text/css">
+  body{
+    width:900px;
+    margin:0 auto;
+  }
+  pre{
+    white-space: pre-wrap;
+    background: #efefef;
+    border:1px solid #ececec;
+    padding:10px;
+    color:#333;
+  }
+  h2{
+    font-family: sans-serif;
+    border-bottom:1px dashed lightblue;
+    border-top:1px dashed lightblue;
+    padding-top: 20px;
+  }
+  h3{
+    font-family: sans-serif;
+    color: #010101;
+  }
+  .field-item{ color: red;}
+  .field-label { color: blue;}
+  .field-items{ border: 1px dashed pink;}
+  .field-items .field-item{ color:green;}
+  .field-item > div { color: teal;}
+  .field-item .field-label{ color: purple;}
+
+  .field-item{
+    border-top:1px dashed #ccc;
+    border-bottom:1px dashed #ccc;
+    padding:5px;
+    background:#f3f4c2;
+  }
+
+</style>
+
+<h1>Drupal8 Fields Default markup</h1>
+Following up on <a href="https://drupal.org/node/2214241">Field default markup - removing the divitis</a> on D.O ive made this page to document the changes.
+<!--1 field no label -->
+<h2>1. field</h2>
+Markup:
+<pre><code>
+  &lt;div class=&quot;field-item ..... field-label-hidden&quot;&gt;
+  Just a field
+  &lt;/div&gt;
+</code></pre>
+
+<div class="field-item field-label-hidden">
+  Just a field
+</div>
+
+<h3>css</h3>
+<pre>
+  .field-item{ color: red;}
+</pre>
+
+<!--1 field with label -->
+<h2>2. a field + label</h2>
+Markup:
+<pre><code>
+&lt;div class=&quot;field-item field ... field-label-above&quot;&gt;
+  &lt;div class=&quot;field-label&quot;&gt;label&lt;/div&gt;
+  &lt;div&gt;the field&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<div class="field-item field field-node--field-one-field-with-label field-name-field-one-field-with-label field-type-text field-label-above">
+  <div class="field-label">label</div>
+  <div>the field</div>
+</div>
+
+<h3>css</h3>
+<pre>
+  .field-item{ color: red;}
+  .field-label { color: blue;}
+  .field-item .field-label{ color: purple;}
+</pre>
+
+
+<!--multifield  field no label  1 value -->
+<h2>3. Multiple fields with 1 value </h2>
+<pre><code>
+&lt;div class=&quot;field-item field... field-label-hidden&quot;&gt;
+  just one field
+&lt;/div&gt;
+
+</code></pre>
+<div class="field-item field field-node--field-multiple-no-lobal field-name-field-multiple-no-lobal field-type-text field-label-hidden">
+  just one field
+</div>
+
+<h3>css</h3>
+<pre>
+.field-item{ color: red;}
+</pre>
+
+<!--multifield  field label 1 value -->
+<h2>4. Mulitple fields 1 value + label</h2>
+<pre><code>
+&lt;div class=&quot;field-item field ... field-label-above&quot;&gt;
+  &lt;div class=&quot;field-label&quot;&gt;label&lt;/div&gt;
+  &lt;div&gt;mulitple 1 value &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<div class="field-item field field-node--field-multiple-with-label field-name-field-multiple-with-label field-type-text field-label-above">
+  <div class="field-label">label</div>
+  <div>mulitple 1 value </div>
+</div>
+<h3>css</h3>
+<pre>
+.field-item{ color: red;}
+.field-item .field-label{ color: blue;}
+.field-item div { color: green;}
+</pre>
+
+<!--mulitple no label multi values -->
+<h2>5. Multiple fields with multiple values</h2>
+<pre><code>
+&lt;div class=&quot;field ... &quot;&gt;
+  &lt;ul class=&quot;field-items&quot;&gt;
+    &lt;li class=&quot;field-item&quot;&gt;one &lt;/li&gt;
+    &lt;li class=&quot;field-item&quot;&gt;two&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+</code></pre>
+
+<div class="field field-node--field-multiple-no-labl-multipe-v field-name-field-multiple-no-labl-multipe-v field-type-text">
+<ul class="field-items">
+  <li class="field-item">one </li>
+  <li class="field-item">two</li>
+</ul>
+</div>
+
+<h3>css</h3>
+<pre>
+.field{}
+.field-items { border: 1px dashed pink}
+.field-items .field-item{ color:green}
+</pre>
+
+<!-- multiple label with multi values-->
+<h2>6. Multiple fields multiple values + label</h2>
+<pre><code>
+&lt;div class=&quot;field ... field-label-above&quot;&gt;
+  &lt;div class=&quot;field-label&quot;&gt;mulitiple label with multiple values&lt;/div&gt;
+  &lt;ul class=&quot;field-items&quot;&gt;
+    &lt;li class=&quot;field-item&quot;&gt;one &lt;/li&gt;
+    &lt;li class=&quot;field-item&quot;&gt;two&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+</code></pre>
+
+<div class="field field-node--field-mulitiple-label-with-multi field-name-field-mulitiple-label-with-multi field-type-text field-label-above">
+<div class="field-label">mulitiple label with multiple values</div>
+  <ul class="field-items">
+    <li class="field-item">one </li>
+    <li class="field-item">two</li>
+  </ul>
+</div>
+
+<h3>css</h3>
+<pre>
+  .field-item{ color: red;}
+  .field-label { color: blue;}
+  .field-items{ border: 1px dashed pink;}
+  .field-items .field-item{ color:green;}
+</pre>
+
+
+</body>
+</html>
