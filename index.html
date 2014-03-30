@@ -44,6 +44,36 @@
 <h1>Drupal8 Fields Default markup</h1>
 Following up on <a href="https://drupal.org/node/2214241">Field default markup - removing the divitis</a> on D.O ive made this page to document the changes.
 
+<h2>twig template (field.html.twig)</h2>
+<pre><code>
+{% if items.length > 1 %}
+  <div class="{{ attributes.class }}"{{ attributes }}>
+    {% if not label_hidden %}
+      <div class="field-label"{{ title_attributes }}>{{ label }}</div>
+    {% endif %}
+    <ul class="field-items"{{ content_attributes }}>
+      {% for delta, item in items %}
+        <li class="field-item"{{ item_attributes[delta] }}>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% else %}
+  {% for delta, item in items %}
+    {% if not label_hidden %}
+      <div class="field-item {{ attributes.class }}"{{ attributes }}>
+        <div class="field-label"{{ title_attributes }}>{{ label }}</div>
+        <div {{ content_attributes }}{{ item_attributes[delta] }}>{{ item }}</div>
+      </div>
+    {% else %}
+      <div class="field-item {{ attributes.class }}"{{ attributes }}{{ content_attributes }}{{ item_attributes[delta] }}>{{ item }}</div>
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+</code></pre>
+
+
+
 css used:
 <pre><code>
   .field-item{ color: red;}
@@ -64,10 +94,7 @@ Markup:
   &lt;/div&gt;
 </code></pre>
 
-<div class="field-item field-label-hidden">
-  Just a field
-</div>
-
+<div class="field-item field field-node--field-one-field-no-label field-name-field-one-field-no-label field-type-text field-label-hidden">one field no label</div>
 <h3>css</h3>
 <pre>
   .field-item{ color: red;}
@@ -83,9 +110,10 @@ Markup:
 &lt;/div&gt;
 </code></pre>
 
+
 <div class="field-item field field-node--field-one-field-with-label field-name-field-one-field-with-label field-type-text field-label-above">
-  <div class="field-label">label</div>
-  <div>the field</div>
+  <div class="field-label">one field with label</div>
+  <div>one field with label</div>
 </div>
 
 <h3>css</h3>
@@ -189,6 +217,20 @@ Markup:
   .field-item > div { color: teal;}
   .field-item .field-label{ color: purple;}
 </pre>
+
+no label:
+field field-content
+
+label: 
+field
+  field-label
+  field-content
+
+field
+  field-label
+  field-items
+    field-content
+    field-content
 
 
 </body>
