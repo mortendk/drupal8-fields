@@ -25,31 +25,40 @@
     font-family: sans-serif;
     color: #010101;
   }
-  /* content */
-  .field-content{ color: red;}
-  
-  .field-single .field-content{ }
-  .field-multiple .field-content{ }
-  
-  .field-single.field-content{ }
-  .field-multiple.field-content{ }
-  
-  /* label */
-  .field-label { color: blue;}
-  
-  /* field items */
-  .field-items{ border: 1px dashed pink;}
-  .field-items .field-content{ color:green;}
-
-
-
-  .field-content{
-    border-top:1px dashed #ccc;
-    border-bottom:1px dashed #ccc;
-    padding:5px;
-    background:#f3f4c2;
+  hr{
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   }
+  /* --------------------------------------- */
 
+  /* outer wrapper always there */
+  /* single or multiple */
+  .field-single{ }
+  .field-multiple{ }
+  /* label  */
+  .field-label-hidden{ }
+  .field-label-above{ }
+  .field-label-inline{ }
+
+  /* label - only there if theres a label */
+  .field-label{ font-weight: bold; }
+
+  /* content wrapper for the content */
+  .field-content{ color: gray;}
+  
+  /* field single - specific only target the field label & field-content */
+  .field-single .field-label{ color: brown; }
+  .field-single .field-content, .field-single.field-content{  color:orange; }
+  
+  /* field multiple - specific only target the field label & field-content */
+  .field-multiple .field-label{ color: burlywood ;}
+  .field-multiple .field-content, .field-multiple.field-content{ color: teal;}
+  
+  /* wrapper for multiple items */
+  .field-items{ background: lightgray;}
+  .field-items .field-content{ border-bottom:1px solid green;}
 </style>
 
 <h1>Drupal8 Fields Default markup</h1>
@@ -57,6 +66,39 @@
 a suggestion for a markup structure for Drupals fields <a href="https://drupal.org/node/2214241">Field default markup - removing the divitis</a>
 </p>
 <p>
+
+
+<!-- Markup test  -->
+<div class="field-single field-content field-label-hidden">Data single value no label </div>
+
+<hr>
+
+<div class="field-single field field-label-above">
+  <div class="field-label">label</div>
+  <div class="field-content">Data single value</div>
+</div>
+
+<hr>
+
+<div class="field-multiple field-items field-label-hidden">
+  <div class="field-content">one </div>
+  <div class="field-content">two</div>
+</div>
+
+<hr>
+
+<div class="field-multiple field field-node--field-mulitiple-label-with-multi field-name-field-mulitiple-label-with-multi field-type-text field-label-above">
+  <div class="field-label">label</div>
+  <div class="field-items">
+    <div class="field-content">data one </div>
+    <div class="field-content">data two</div>
+  </div>
+</div>
+<hr>
+<!-- / Markup test  -->
+
+
+
 Drupals fields come out in 4 different variations:
 
 <ol>
@@ -67,7 +109,36 @@ Drupals fields come out in 4 different variations:
 </ol>
 </p>
 
+<h2>css standard classes</h2>
 <pre><code>
+
+
+  /* outer wrapper always there */
+  /* single or multiple */
+  .field-single{ }
+  .field-multiple{ }
+  /* label  */
+  .field-label-hidden{ }
+  .field-label-above{ }
+  .field-label-inline{ }
+
+  /* label - only there if theres a label */
+  .field-label{ font-weight: bold; }
+
+  /* content wrapper for the content */
+  .field-content{ color: gray;}
+  
+  /* field single - specific only target the field label & field-content */
+  .field-single .field-label{ color: brown; }
+  .field-single .field-content, .field-single.field-content{  color:orange; }
+  
+  /* field multiple - specific only target the field label & field-content */
+  .field-multiple .field-label{ color: burlywood ;}
+  .field-multiple .field-content, .field-multiple.field-content{ color: teal;}
+  
+  /* wrapper for multiple items */
+  .field-items{ background: lightgray;}
+  .field-items .field-content{ border-bottom:1px solid green;}
 
 </code></pre>
 
@@ -87,20 +158,27 @@ Drupals fields come out in 4 different variations:
 a field will be outputtet 4 different ways, in the css that would mean that you would write 
 
 <pre><code>
-.field.content{
+
+.field-single{
   
 }
+.field-multiple{
 
+}
+.field.content{
+   
+}
 .field-single .field-content, .field-single.field-content{ 
  /* these can be the same, but are in structure different */
 }
 </code></pre>
 </p> 
 
+
 <!--1 field no label -->
 <h2>1. Single value</h2>
 <p>
-  wrapper have .field-single & .field-content
+  The single value field with no label will have wrapper have .field-single & .field-content
 </p>
 
 <pre><code>
