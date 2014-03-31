@@ -37,6 +37,7 @@
   /* single or multiple */
   .field-single{ }
   .field-multiple{ }
+
   /* label  */
   .field-label-hidden{ }
   .field-label-above{ }
@@ -65,29 +66,40 @@
 <p>
 a suggestion for a markup structure for Drupals fields <a href="https://drupal.org/node/2214241">Field default markup - removing the divitis</a>
 </p>
+
 <p>
+Drupals fields come out in 4 different variations:
+<ol>
+  <li>Single value</li>
+  <li>Single value with Label</li>  
+  <li>Multiple values</li>
+  <li>Multiple values with Label</li>  
+</ol>
+</p>
 
 
+<h2>Test:</h2>
 <!-- Markup test  -->
+<h3>single value</h3>
 <div class="field-single field-content field-label-hidden">Data single value no label </div>
 
 <hr>
-
+<h3>single value + label</h3>
 <div class="field-single field field-label-above">
   <div class="field-label">label</div>
   <div class="field-content">Data single value</div>
 </div>
 
 <hr>
-
+<h3>multiple  value</h3>
 <div class="field-multiple field-items field-label-hidden">
   <div class="field-content">one </div>
   <div class="field-content">two</div>
 </div>
 
 <hr>
-
-<div class="field-multiple field field-node--field-mulitiple-label-with-multi field-name-field-mulitiple-label-with-multi field-type-text field-label-above">
+<h3>multiple value + label</h3>
+<div class="field-multiple field-label-above">
   <div class="field-label">label</div>
   <div class="field-items">
     <div class="field-content">data one </div>
@@ -97,82 +109,79 @@ a suggestion for a markup structure for Drupals fields <a href="https://drupal.o
 <hr>
 <!-- / Markup test  -->
 
+<h2>css structure</h2>
 
-
-Drupals fields come out in 4 different variations:
-
-<ol>
-  <li>Single value</li>
-  <li>Single value with Label</li>  
-  <li>Multiple values</li>
-  <li>Multiple values with Label</li>  
-</ol>
-</p>
-
-<h2>css standard classes</h2>
+<h3>Single vs multiple</h3>
 <pre><code>
+  &lt;div class=&quot;field-single field-content&quot;&gt;
+  Data single value no label 
+  &lt;/div&gt;
+</code></pre>
+
+<pre><code>
+&lt;div class=&quot;field-multiple&quot;&gt;
+  &lt;div class=&quot;field-label&quot;&gt;label&lt;/div&gt;
+  &lt;div class=&quot;field-items&quot;&gt;
+    &lt;div class=&quot;field-content&quot;&gt;data one &lt;/div&gt;
+    &lt;div class=&quot;field-content&quot;&gt;data two&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
 
 
-  /* outer wrapper always there */
+
+<p>The classname are just used for this example</p>
+
+<h3>Outer wrapper</h3>
+<p>
+descripes if the field is single or multiple & the status of the label
+</p>
+<pre><code>
   /* single or multiple */
   .field-single{ }
   .field-multiple{ }
+
   /* label  */
   .field-label-hidden{ }
   .field-label-above{ }
   .field-label-inline{ }
-
-  /* label - only there if theres a label */
-  .field-label{ font-weight: bold; }
-
-  /* content wrapper for the content */
-  .field-content{ color: gray;}
-  
-  /* field single - specific only target the field label & field-content */
-  .field-single .field-label{ color: brown; }
-  .field-single .field-content, .field-single.field-content{  color:orange; }
-  
-  /* field multiple - specific only target the field label & field-content */
-  .field-multiple .field-label{ color: burlywood ;}
-  .field-multiple .field-content, .field-multiple.field-content{ color: teal;}
-  
-  /* wrapper for multiple items */
-  .field-items{ background: lightgray;}
-  .field-items .field-content{ border-bottom:1px solid green;}
-
 </code></pre>
 
-<h2>Pro</h2>
-<ol>
-  <li>Removes the 3 layers of divs around a single value field with no label</li>
-  <li>Removes the 2 layers of divs around a multiple value field with no label</li>
-  <li>keeps the structure for a multiple value field, but dont add cruft to fields that dont need it</li>
-</ol>
-
-<h2>cons</h2>
- <ol>
-  <li>.field-single .field-content & .field-single.field-content </li>
-  <li>.field-multiple .field-content & .field-multiple.field-content </li>
- </ol>
-<p>
-a field will be outputtet 4 different ways, in the css that would mean that you would write 
-
+<h3>field Label</h3>
+<p>The label & ways to taget if </p>
 <pre><code>
-
-.field-single{
-  
-}
-.field-multiple{
-
-}
-.field.content{
-   
-}
-.field-single .field-content, .field-single.field-content{ 
- /* these can be the same, but are in structure different */
-}
+  .field-label{  }
+  .field-single .field-label{ }
+  .field-multiple .field-label{ ;}
 </code></pre>
-</p> 
+  
+<h3>field content</h3>  
+<p>
+a fields content can be targed differently if its single or mulitple values
+</p>
+<pre><code>
+.field-content{ 
+
+}
+
+.field-single .field-content, 
+.field-single.field-content{  
+
+}
+.field-multiple .field-content, 
+.field-multiple.field-content{ 
+
+}
+
+.field-items{
+
+}
+.field-items .field-content{ 
+
+}
+
+</code></pre>
+
 
 
 <!--1 field no label -->
@@ -226,6 +235,8 @@ Markup:
 &lt;/div&gt;
 </code></pre>
 
+
+
 <div class="field-multiple field-items field field-node--field-multiple-no-labl-multipe-v field-name-field-multiple-no-labl-multipe-v field-type-text field-label-hidden">
   <div class="field-content">one </div>
   <div class="field-content">two</div>
@@ -271,6 +282,40 @@ Markup:
 .field-items .field-content{}
 </pre>
 
+
+
+
+<h2>Pro</h2>
+<ol>
+  <li>Removes the 3 layers of divs around a single value field with no label</li>
+  <li>Removes the 2 layers of divs around a multiple value field with no label</li>
+  <li>keeps the structure for a multiple value field, but dont add cruft to fields that dont need it</li>
+</ol>
+
+<h2>cons</h2>
+ <ol>
+  <li>.field-single .field-content & .field-single.field-content </li>
+  <li>.field-multiple .field-content & .field-multiple.field-content </li>
+ </ol>
+<p>
+a field will be outputtet 4 different ways, in the css that would mean that you would write 
+
+<pre><code>
+
+.field-single{
+  
+}
+.field-multiple{
+
+}
+.field.content{
+   
+}
+.field-single .field-content, .field-single.field-content{ 
+ /* these can be the same, but are in structure different */
+}
+</code></pre>
+</p> 
 
 
 </body>
