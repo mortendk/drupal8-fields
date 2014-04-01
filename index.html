@@ -3,6 +3,11 @@
   <title>Drupal8 twig: Field.html.twig output</title>
 </head>
 <body>
+
+<link rel="stylesheet" href="highlight/styles/monokai_sublime.css">
+<script src="highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 <style type="text/css">
   body{
     width:900px;
@@ -44,279 +49,619 @@
   .field-label-inline{ }
 
   /* label - only there if theres a label */
-  .field-label{ font-weight: bold; }
+  .field-label{  }
 
   /* content wrapper for the content */
-  .field-content{ color: gray;}
+  .field-item{ color: gray;}
   
-  /* field single - specific only target the field label & field-content */
-  .field-single .field-label{ color: brown; }
-  .field-single .field-content, .field-single.field-content{  color:orange; }
+  /* field single - specific only target the field label & field-item */
+  .field-single .field-label{  }
+  .field-single .field-item, .field-single.field-item{  }
   
-  /* field multiple - specific only target the field label & field-content */
-  .field-multiple .field-label{ color: burlywood ;}
-  .field-multiple .field-content, .field-multiple.field-content{ color: teal;}
+  /* field multiple - specific only target the field label & field-item */
+  .field-multiple .field-label{ }
+  .field-multiple .field-item, .field-multiple.field-item{ }
   
   /* wrapper for multiple items */
-  .field-items{ background: lightgray;}
-  .field-items .field-content{ border-bottom:1px solid green;}
+  .field-items{ }
+  .field-items .field-item{ }
 </style>
 
-<h1>Drupal8 Fields Default markup</h1>
+<h1>Drupal 8 Fields Default Markup & Structure</h1>
 <p>
-a suggestion for a markup structure for Drupals fields <a href="https://drupal.org/node/2214241">Field default markup - removing the divitis</a>
+A suggestion for a markup structure for Drupals fields started in the issue:<a href="https://drupal.org/node/2214241">Field default markup - removing the divitis</a> on drupal.org
 </p>
 
+<h2>Drupal is doing it wrong(tm)</h2>
 <p>
-Drupals fields come out in 4 different variations:
+Drupals fields exist in 4 different basic variations, that Drupal 7 tries to print out in the same structure, that is the reason for the divitis & 3 div's thats wrapping a single item. Thats a huge pain for everybody that works in the frontend, cause of the cruft that we have today. 
+We are wrapping the data in the same structure even when that the output is different, and should be different patterns:
+</p>
 <ol>
   <li>Single value</li>
   <li>Single value with Label</li>  
   <li>Multiple values</li>
   <li>Multiple values with Label</li>  
 </ol>
+<p>
+Keeping the exact same markup pattern, make sense from an academic point of view, but is not practial in the real world .its easy for overcome the issues that can occour when the patterns change with css.
+<br>
+By having a better markup pattern, the label more information to work with & its possible to get rid of the float:left & clearfix issues, insteadd inline-block or inline can be used prober.
 </p>
 
 
-<h2>Test:</h2>
-<!-- Markup test  -->
-<h3>single value</h3>
-<div class="field-single field-content field-label-hidden">Data single value no label </div>
 
-<hr>
-<h3>single value + label</h3>
-<div class="field-single field field-label-above">
-  <div class="field-label">label</div>
-  <div class="field-content">Data single value</div>
-</div>
+<h2>Markup Patterns</h2>
+<p>
 
-<hr>
-<h3>multiple  value</h3>
-<div class="field-multiple field-items field-label-hidden">
-  <div class="field-content">one </div>
-  <div class="field-content">two</div>
-</div>
+FYI: In all of the examples i have removed the names of the fields, im only concerned about the core elements (label, item, wrapper)
+im using the names were using in Drupal right now (drupal7)
+</p>
 
-<hr>
-<h3>multiple value + label</h3>
-<div class="field-multiple field-label-above">
-  <div class="field-label">label</div>
-  <div class="field-items">
-    <div class="field-content">data one </div>
-    <div class="field-content">data two</div>
-  </div>
-</div>
-<hr>
-<!-- / Markup test  -->
-
-<h2>css structure</h2>
-
-<h3>Single vs multiple</h3>
+<h3>Single field-item</h3>
 <pre><code>
-  &lt;div class=&quot;field-single field-content&quot;&gt;
-  Data single value no label 
-  &lt;/div&gt;
+  &lt;div class=&quot;field-single field-item&quot;&gt; Data &lt;/div&gt;
+</code></pre>
+
+<pre><code>
+&lt;div class=&quot;field-single&quot;&gt;
+  &lt;div class=&quot;field-label&quot;&gt;label&lt;/div&gt;
+  &lt;div class=&quot;field-item&quot;&gt;data&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>
+<b>.field-item</b> is the data wrapper <br>
+<b>.field-single</b> is always added to the outer wrapper.<br>
+if theres a label, the field-item is following the fields data. All depending the labels the field-item can be targeted in different ways:
+</p>
+<pre><code> 
+/* --- Field Item */
+.field-item{  
+  /* default for all field-item */
+}
+
+.field-single .field-item{ 
+  /* single .field-item overwrite */
+}
+
+.field-single.field-item{  
+  /* single .field-item with no label overwrite */
+}
+
+.field-single .field-item, 
+.field-single.field-item{  
+  /* both of single field-item overwrite */
+}
+
+/* --- Field Item */
+.field-label{
+  /* all field-label */
+}
+
+.field-single .field-label{
+  /* single field label*/
+}
+</code></pre>
+
+<h3>Multiple value fields </h3>
+
+<pre><code>
+&lt;div class=&quot;field-multiple field-items&quot;&gt;
+  &lt;div class=&quot;field-item&quot;&gt;one &lt;/div&gt;
+  &lt;div class=&quot;field-item&quot;&gt;two&lt;/div&gt;
+&lt;/div&gt;
 </code></pre>
 
 <pre><code>
 &lt;div class=&quot;field-multiple&quot;&gt;
   &lt;div class=&quot;field-label&quot;&gt;label&lt;/div&gt;
   &lt;div class=&quot;field-items&quot;&gt;
-    &lt;div class=&quot;field-content&quot;&gt;data one &lt;/div&gt;
-    &lt;div class=&quot;field-content&quot;&gt;data two&lt;/div&gt;
+    &lt;div class=&quot;field-item&quot;&gt;data one &lt;/div&gt;
+    &lt;div class=&quot;field-item&quot;&gt;data two&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
-
-
-
-<p>The classname are just used for this example</p>
-
-<h3>Outer wrapper</h3>
 <p>
-descripes if the field is single or multiple & the status of the label
-</p>
-<pre><code>
-  /* single or multiple */
-  .field-single{ }
-  .field-multiple{ }
-
-  /* label  */
-  .field-label-hidden{ }
-  .field-label-above{ }
-  .field-label-inline{ }
-</code></pre>
-
-<h3>field Label</h3>
-<p>The label & ways to taget if </p>
-<pre><code>
-  .field-label{  }
-  .field-single .field-label{ }
-  .field-multiple .field-label{ ;}
-</code></pre>
-  
-<h3>field content</h3>  
-<p>
-a fields content can be targed differently if its single or mulitple values
-</p>
-<pre><code>
-.field-content{ 
-
-}
-
-.field-single .field-content, 
-.field-single.field-content{  
-
-}
-.field-multiple .field-content, 
-.field-multiple.field-content{ 
-
-}
-
-.field-items{
-
-}
-.field-items .field-content{ 
-
-}
-
-</code></pre>
-
-
-
-<!--1 field no label -->
-<h2>1. Single value</h2>
-<p>
-  The single value field with no label will have wrapper have .field-single & .field-content
+<b>.field-multiple</b> is always added to the outer wrapper. <br>
+<b>.field-items</b> is used as wrapper for the multiple .field-item.<br>
+If theres a label, .field-items is following the field-items . All depending the labels the field-item can be targeted in different ways:
 </p>
 
 <pre><code>
-  &lt;div class=&quot;field-single field-content ... field-label-hidden&quot;&gt;
-  Data single value no label 
-  &lt;/div&gt;
-</code></pre>
+/* --- Field Item --------------------------*/
+.field-item{  
+  /* default for all field-item */
+}
 
-<div class="field-single field-content field field-node--field-one-field-no-label field-name-field-one-field-no-label field-type-text field-label-hidden">Data single value no label </div>
-<pre>
-  .field-content{ color: red;}
-  .field-single.field-content{ ... } 
-</pre>
+.field-multiple .field-item{
+  /* multiple field-item's with a label */
+}
 
-<!--1 field with label -->
-<h2>2 single value with Label</h2>
-<p>wrapper have .field-single .field-content is added to its field, so its seperated from the field-label, providing a sane structure.</p>
-Markup:
-<pre><code>
-&lt;div class=&quot;field-single ... field-label-above&quot;&gt;
-  &lt;div class=&quot;field-label&quot;&gt;one field with label&lt;/div&gt;
-  &lt;div class=&quot;field-content&quot;&gt;one field with label&lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
+.field-multiple.field-items{
+  /* multiple field-item's with no label */
+}
 
-<div class="field-single field field-node--field-one-field-with-label field-name-field-one-field-with-label field-type-text field-label-above edit-processed edit-field" data-edit-field-id="node/2/field_one_field_with_label/en/full">
-  <div class="field-label">label</div>
-  <div class="field-content">Data single value</div>
-</div>
+.field-multiple .field-item, 
+.field-multiple.field-items,
+.field-items .field-item{
+  /* multiple field-item */
+}
 
-<h3>css</h3>
-<pre>
-  .field-content{ color: red;}
-  .field-single .field-content { color: purple;}
-  .field-label { color: blue;} 
-</pre>
+/* --- Field Label */
 
-<!--multifield  field no label -->
-<h2>3. Multiple values</h2>
+.field-label{
+  /* all field-label */
+}
 
-<pre><code>
-&lt;div class=&quot;field-multiple field-items ... field-label-hidden&quot;&gt;
-  &lt;div class=&quot;field-content&quot;&gt;one &lt;/div&gt;
-  &lt;div class=&quot;field-content&quot;&gt;two&lt;/div&gt;
-&lt;/div&gt;
+.field-multiple .field-label{
+  /* single field label*/
+}
 </code></pre>
 
 
-
-<div class="field-multiple field-items field field-node--field-multiple-no-labl-multipe-v field-name-field-multiple-no-labl-multipe-v field-type-text field-label-hidden">
-  <div class="field-content">one </div>
-  <div class="field-content">two</div>
-</div>
-
-<h3>css</h3>
-<pre>
-.field-multiple{ }
-.field-label{}
-.field-items{}
-.field-content{}
-.field-items .field-content{}
-</pre>
-
-<!--multifield  field no label -->
-<h2>4. Multiple values with Label</h2>
-<p>wrapper have .field-multiple </p>
+<h2>Label status</h2>
+<p>The .field-label-[status] is added to the out wrapper</p>
 
 <pre><code>
-&lt;div class=&quot;field-multiple ... field-label-above&quot;&gt;
+&lt;div class=&quot;field-single/field-multiple field-label-above&quot;&gt;
   &lt;div class=&quot;field-label&quot;&gt;label&lt;/div&gt;
+  ....
+&lt;/div&gt;
+</code></pre>
+
+<pre><code>
+.field-label-hidden{ 
+  /* label is set to hidden from the ui & is not printed out */
+
+}
+
+.field-label-above{ 
+  /* label set to above from the ui */
+}
+
+.field-label-inline{ 
+  /* label set to be inline from the ui */
+}
+</code></pre>
+
+
+<h2>Field Display test 1:2 </h2>
+<p>Using display:inline-block</p>
+<style type="text/css">
+/* base */
+.field-single, .field-multiple{
+  padding: 0.5em 0;
+}
+.test-inline .field-label{
+  font-weight: bold;
+}
+.test-inline .field-label:after{ 
+ content: " :";
+}
+.test-inline .field-item{ font-style: italic;}
+
+/* inline field labels */
+.test-inline .field-label-inline .field-label{
+  vertical-align: top; 
+  display:inline-block;
+  color:black;
+}
+
+.test-inline .field-label-above .field-label{
+  color:brown;
+}
+
+/* inline label single field  2 variations to overwrite dont overwrite the field items*/
+.test-inline .field-single.field-label-inline .field-item{
+  display: inline-block;
+  color:red;
+}
+.test-inline .field-label-inline > .field-item{ }
+
+.test-inline .field-label-inline .field-items{
+  display: inline-block;
+}
+/* field item variations single */
+.test-inline .field-items .field-item{
+  color:blue;
+}
+/* field item variations multiple */
+.test-inline .field-label-above .field-items .field-item{
+  color:green;
+}
+
+/* field items inline  */
+.test-inline .test-item-inline .field-items .field-item{
+  display: inline-block;
+}
+</style>
+
+<div class="test-inline">
+  <!-- single inline  -->
+  <div class="field-single field field-label-inline">
+    <div class="field-label">label inline</div>
+    <div class="field-item">Data</div>
+  </div>
+
+  <div class="field-single field field-label-inline">
+    <div class="field-label">label inline</div>
+    <div class="field-item">Data</div>
+  </div>
+
+  
+  <!-- single inline label  -->
+  <div class="field-single field field-label-above">
+    <div class="field-label">label above</div>
+    <div class="field-item">Data</div>
+  </div>
+
+
+  <div class="field-single field field-label-above">
+    <div class="field-label">label above</div>
+    <div class="field-item">Data</div>
+  </div>
+
+
+
+  <!-- multiple inline label -->
+  <div class="field-multiple field-label-inline">
+    <div class="field-label">label inline </div>
+    <div class="field-items">
+      <div class="field-item">data</div>
+      <div class="field-item">data</div>
+      <div class="field-item">data</div>
+      <div class="field-item">data</div>
+    </div>
+  </div>
+  
+
+
+  <div class="test-item-inline">
+    <div class="field-multiple field-label-inline">
+      <div class="field-label">label inline inline items</div>
+      <div class="field-items">
+        <div class="field-item">data</div>
+        <div class="field-item">data</div>
+        <div class="field-item">data</div>
+        <div class="field-item">data</div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="field-multiple field-label-above">
+    <div class="field-label">label above </div>
+    <div class="field-items">
+      <div class="field-item">data</div>
+      <div class="field-item">data</div>
+      <div class="field-item">data</div>
+      <div class="field-item">data</div>
+    </div>
+  </div>
+
+
+  <div class="test-item-inline">
+    <div class="field-multiple field-label-above">
+      <div class="field-label">label above inline items</div>
+      <div class="field-items">
+        <div class="field-item">data</div>
+        <div class="field-item">data</div>
+        <div class="field-item">data</div>
+        <div class="field-item">data</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- label test -->
+
+<pre><code>
+/*  -- base  ---*/
+.field-label{
+  font-weight: bold;
+}
+.field-label:after{ 
+ content: " :";
+}
+.field-item{ font-style: italic;}
+
+/* inline field labels */
+.field-label-inline .field-label{
+  vertical-align: top; 
+  display:inline-block;
+  color:black;
+}
+
+.field-label-above .field-label{
+  color:brown;
+}
+
+/*------------ items ------------------------/*
+/* inline label single field  2 variations to overwrite dont overwrite the field items*/
+.field-single.field-label-inline .field-item{
+  display: inline-block;
+  color:red;
+}
+.field-label-inline > .field-item{ }
+
+.field-label-inline .field-items{
+  display: inline-block;
+}
+/* field item variations single */
+.field-items .field-item{
+  color:blue;
+}
+/* field item variations multiple */
+.field-label-above .field-items .field-item{
+  color:green;
+}
+
+/* field items inline  */
+.test-item-inline .field-items .field-item{
+  display: inline-block;
+}
+</code></pre>
+
+<h2>Field Display test: fLoats </h2>
+
+<style type="text/css">
+/* base */
+.test-float .field-label{
+  font-weight: bold;
+}
+.test-float .field-label:after{ 
+ content: " :";
+}
+.test-float .field-item{ font-style: italic;}
+
+/* inline field labels */
+.test-float .field-label-inline .field-label{
+  vertical-align: top; 
+  float:left;
+  color:black;
+}
+
+.test-float .field-label-above .field-label{
+  color:brown;
+}
+
+/* inline label single field  2 variations to overwrite dont overwrite the field items*/
+.test-float .field-single.field-label-inline .field-item{
+  color:red;
+}
+.test-float .field-label-inline > .field-item{ }
+
+.test-float .field-label-inline .field-items{
+  float:left;
+}
+/* clearfixin used for an inline label with multiple fields */
+.test-float .field-label-inline.field-multiple:before,
+.test-float .field-label-inline.field-multiple:after {
+  content:""; display:table; 
+}
+.test-float .field-label-inline.field-multiple:after {
+  clear:both;
+}
+
+/* field item variations single */
+.test-float .field-items .field-item{
+  color:blue;
+}
+/* field item variations multiple */
+.test-float .field-label-above .field-items .field-item{
+  color:green;
+}
+
+/* field items inline  */
+.test-float .test-item-inline .field-items .field-item{
+ float:left; padding-right:1em;
+}
+</style>
+
+<div class="test-float">
+  <!-- single inline  -->
+  <div class="field-single field field-label-inline">
+    <div class="field-label">label inline</div>
+    <div class="field-item">Data</div>
+  </div>
+
+  <div class="field-single field field-label-inline">
+    <div class="field-label">label inline</div>
+    <div class="field-item">Data</div>
+  </div>
+
+
+  
+  <!-- single inline label  -->
+  <div class="field-single field field-label-above">
+    <div class="field-label">label above</div>
+    <div class="field-item">Data</div>
+  </div>
+
+
+  <div class="field-single field field-label-above">
+    <div class="field-label">label above</div>
+    <div class="field-item">Data</div>
+  </div>
+
+
+
+  <!-- multiple inline label -->
+  <div class="field-multiple field-label-inline">
+    <div class="field-label">label inline </div>
+    <div class="field-items">
+      <div class="field-item">data</div>
+      <div class="field-item">data</div>
+      <div class="field-item">data</div>
+      <div class="field-item">data</div>
+    </div>
+  </div>
+  
+
+
+  <div class="test-item-inline">
+    <div class="field-multiple field-label-inline">
+      <div class="field-label">label inline inline items</div>
+      <div class="field-items">
+        <div class="field-item">data</div>
+        <div class="field-item">data</div>
+        <div class="field-item">data</div>
+        <div class="field-item">data</div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="field-multiple field-label-above">
+    <div class="field-label">label above </div>
+    <div class="field-items">
+      <div class="field-item">data</div>
+      <div class="field-item">data</div>
+      <div class="field-item">data</div>
+      <div class="field-item">data</div>
+    </div>
+  </div>
+
+
+
+  <div class="test-item-inline">
+    <div class="field-multiple field-label-above">
+      <div class="field-label">label above inline items</div>
+      <div class="field-items">
+        <div class="field-item">data</div>
+        <div class="field-item">data</div>
+        <div class="field-item">data</div>
+        <div class="field-item">data</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+<h2>Drupal7 </h2>
+<p>
+Drupals pattern is always expecting it to be a multiple field with a label, that created the divitis, thats not nessesary. <br>
+Drupals markup make sense when a field always have multiple values. <br>
+.clearfix is added as a hardcoded class - which makes the layout of a field less flexible.<br>
+</p>
+
+<h3>single value no label</h3>
+<pre><code>
+&lt;div class=&quot;field field-name-field-text field-type-text field-label-hidden&quot;&gt;
   &lt;div class=&quot;field-items&quot;&gt;
-    &lt;div class=&quot;field-content&quot;&gt;data one &lt;/div&gt;
-    &lt;div class=&quot;field-content&quot;&gt;data two&lt;/div&gt;
+    &lt;div class=&quot;field-item even&quot;&gt;data&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>
+<code>.field-items .field-item{ }</code> targets both multiple & single .field-item<br>
+Heavy cruft (divitis) 3 wrappers where only one is needed.<br>
+</p>
+
+<hr>
+
+<h3>single value above</h3>
+<pre><code>
+&lt;div class=&quot;field  field-label-above&quot;&gt;
+  &lt;div class=&quot;field-label&quot;&gt;text:&amp;nbsp;&lt;/div&gt;
+  &lt;div class=&quot;field-items&quot;&gt;
+    &lt;div class=&quot;field-item even&quot;&gt;data&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
 
-<div class="field-multiple field field-node--field-mulitiple-label-with-multi field-name-field-mulitiple-label-with-multi field-type-text field-label-above">
-  <div class="field-label">label</div>
-  <div class="field-items">
-    <div class="field-content">data one </div>
-    <div class="field-content">data two</div>
-  </div>
-</div>
-
-<h3>css</h3>
-<pre>
-.field-multiple{ }
-.field-label{}
-.field-items{}
-.field-content{}
-.field-items .field-content{}
-</pre>
+<p>
+.field-label have no idea of single vs multiple values, harder to use <code>display:inline-block</code><br>
+div.field-items is cruft <br>
+.field-items .field-item, theres no difference between a single value field & multivalue field
+</p>
 
 
+<h3>single value inline</h3>
+<pre><code>
+&lt;div class=&quot;field field-label-inline clearfix&quot;&gt;
+  &lt;div class=&quot;field-label&quot;&gt;text:&amp;nbsp;&lt;/div&gt;
+  &lt;div class=&quot;field-items&quot;&gt;
+    &lt;div class=&quot;field-item even&quot;&gt;data&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre> 
+<p>
+.cleafix hardcoded, makes the field less flexible <br>
+.field-label have no idea of the single vs multiple values <br>
+div.field-items is cruft<br>
+.field-items .field-item, theres no difference between a single value .field-item
 
+</p>
+
+
+<h3>Mulitiple no label</h3>
+<pre><code>
+&lt;div class=&quot;field field-label-hidden&quot;&gt;
+  &lt;div class=&quot;field-items&quot;&gt;
+    &lt;div class=&quot;field-item even&quot;&gt;data&lt;/div&gt;
+    &lt;div class=&quot;field-item odd&quot;&gt;data2&lt;/div&gt;
+    &lt;div class=&quot;field-item even&quot;&gt;data3&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>
+div.field-items is cruft (combine it with .field)
+
+</p>
+
+<h3>multi + label </h3>
+<pre><code>
+&lt;div class=&quot;field field-label-above&quot;&gt;
+  &lt;div class=&quot;field-label&quot;&gt;text:&amp;nbsp;&lt;/div&gt;
+  &lt;div class=&quot;field-items&quot;&gt;
+    &lt;div class=&quot;field-item even&quot;&gt;data&lt;/div&gt;
+    &lt;div class=&quot;field-item odd&quot;&gt;data2&lt;/div&gt;
+    &lt;div class=&quot;field-item even&quot;&gt;data3&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>
+field-label dont know if its a single or multiple field
+</p>
+
+<h3>Multi label inline</h3>
+<pre><code>
+&lt;div class=&quot;field field-label-inline clearfix&quot;&gt;
+  &lt;div class=&quot;field-label&quot;&gt;text:&amp;nbsp;&lt;/div&gt;
+  &lt;div class=&quot;field-items&quot;&gt;
+    &lt;div class=&quot;field-item even&quot;&gt;data&lt;/div&gt;
+    &lt;div class=&quot;field-item odd&quot;&gt;data2&lt;/div&gt;
+    &lt;div class=&quot;field-item even&quot;&gt;data3&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>
+.clearfix added <br>  
+.field-label dont know about the fields multiple single
+</p>
 
 <h2>Pro</h2>
 <ol>
-  <li>Removes the 3 layers of divs around a single value field with no label</li>
-  <li>Removes the 2 layers of divs around a multiple value field with no label</li>
-  <li>keeps the structure for a multiple value field, but dont add cruft to fields that dont need it</li>
+  <li>Remove cruft & Divitis</li>
+  <li>.field-label is aware of the items</li>
+  <li>possible to use display:inline-block, instad of float:left</li>
 </ol>
 
-<h2>cons</h2>
- <ol>
-  <li>.field-single .field-content & .field-single.field-content </li>
-  <li>.field-multiple .field-content & .field-multiple.field-content </li>
- </ol>
+<h2>Cons</h2>
+<ol>
+  <li>Markup pattern changes</li>
+  <li>item.html.twig can be more complicated</li>
+  <li>css can be a little bit more compliced (for a noob)</li>
+</ol>
+
 <p>
-a field will be outputtet 4 different ways, in the css that would mean that you would write 
-
-<pre><code>
-
-.field-single{
-  
-}
-.field-multiple{
-
-}
-.field.content{
-   
-}
-.field-single .field-content, .field-single.field-content{ 
- /* these can be the same, but are in structure different */
-}
-</code></pre>
-</p> 
-
+Reading the waypoint to guide os for Drupal8 theming (<a href="https://drupal.org/node/2008464#principles">Principles: Waypoints to guide us</a>) its clear that fields must be changed, the cons are fixable
+</p>
 
 </body>
 </html>
