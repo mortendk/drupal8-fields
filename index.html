@@ -69,10 +69,12 @@
 
 <h1>Drupal 8 Fields Default Markup & Structure</h1>
 <p>
-A suggestion for a markup structure for Drupals fields started in the issue:<a href="https://drupal.org/node/2214241">Field default markup - removing the divitis</a> on drupal.org
+A suggestion for a markup structure for Drupals fields started in the issue:<a href="https://drupal.org/node/2214241">Field default markup - removing the divitis</a> on drupal.org <br>
+
+As a guideline i have used the <a href="https://drupal.org/node/2008464#principles">Principles: Waypoints to guide us</a> as simple rules.
 </p>
 
-<h2>Drupal is doing it wrong(tm)</h2>
+<h2>4 patterns instead of 1</h2>
 <p>
 Drupals fields exist in 4 different basic variations, that Drupal 7 tries to print out in the same structure, that is the reason for the divitis & 3 div's thats wrapping a single item. Thats a huge pain for everybody that works in the frontend, cause of the cruft that we have today. 
 We are wrapping the data in the same structure even when that the output is different, and should be different patterns:
