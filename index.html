@@ -53,15 +53,15 @@
 
   /* content wrapper for the content */
   .field-item{ color: gray;}
-  
+
   /* field single - specific only target the field label & field-item */
   .field-single .field-label{  }
   .field-single .field-item, .field-single.field-item{  }
-  
+
   /* field multiple - specific only target the field label & field-item */
   .field-multiple .field-label{ }
   .field-multiple .field-item, .field-multiple.field-item{ }
-  
+
   /* wrapper for multiple items */
   .field-items{ }
   .field-items .field-item{ }
@@ -71,7 +71,7 @@
 <p>
 A solution for Drupal8 fields in the theme layer.
 <br>
-comments should be added to the issue - the reason i didnt write it inside of the issueque is that it would be to complex to read 
+comments should be added to the issue - the reason i didnt write it inside of the issueque is that it would be to complex to read
 <br>
 Feedback & pullrequest are more than welcome ;)
 <br>
@@ -88,14 +88,14 @@ As a guideline i have used the <a href="https://drupal.org/node/2008464#principl
 
 <h2>4 patterns instead of 1</h2>
 <p>
-Drupals fields exist in 4 different basic variations, that Drupal 7 tries to print out in the same structure, that is the reason for the divitis & 3 div's thats wrapping a single item. Thats a huge pain for everybody that works in the frontend, cause of the cruft that we have today. 
+Drupals fields exist in 4 different basic variations, that Drupal 7 tries to print out in the same structure, that is the reason for the divitis & 3 div's thats wrapping a single item. Thats a huge pain for everybody that works in the frontend, cause of the cruft that we have today.
 We are wrapping the data in the same structure even when that the output is different, and should be different patterns:
 </p>
 <ol>
   <li>Single value</li>
-  <li>Single value with Label</li>  
+  <li>Single value with Label</li>
   <li>Multiple values</li>
-  <li>Multiple values with Label</li>  
+  <li>Multiple values with Label</li>
 </ol>
 <p>
 Keeping the exact same markup pattern, make sense from an academic point of view, but is not practial in the real world .its easy for overcome the issues that can occour when the patterns change with css.
@@ -114,7 +114,8 @@ im using the names were using in Drupal right now (drupal7)
 
 <h3>Single field-item</h3>
 <pre><code>
-  &lt;div class=&quot;field-single field-item&quot;&gt; Data &lt;/div&gt;
+&lt;div class=&quot;field-single field-item&quot;&gt;Data&lt;/div&gt;
+
 </code></pre>
 
 <pre><code>
@@ -122,6 +123,7 @@ im using the names were using in Drupal right now (drupal7)
   &lt;div class=&quot;field-label&quot;&gt;label&lt;/div&gt;
   &lt;div class=&quot;field-item&quot;&gt;data&lt;/div&gt;
 &lt;/div&gt;
+
 </code></pre>
 
 <p>
@@ -129,22 +131,22 @@ im using the names were using in Drupal right now (drupal7)
 <b>.field-single</b> is always added to the outer wrapper.<br>
 if theres a label, the field-item is following the fields data. All depending the labels the field-item can be targeted in different ways:
 </p>
-<pre><code> 
+<pre><code>
 /* --- Field Item */
-.field-item{  
+.field-item{
   /* default for all field-item */
 }
 
-.field-single .field-item{ 
+.field-single .field-item{
   /* single .field-item overwrite */
 }
 
-.field-single.field-item{  
+.field-single.field-item{
   /* single .field-item with no label overwrite */
 }
 
-.field-single .field-item, 
-.field-single.field-item{  
+.field-single .field-item,
+.field-single.field-item{
   /* both of single field-item overwrite */
 }
 
@@ -156,6 +158,7 @@ if theres a label, the field-item is following the fields data. All depending th
 .field-single .field-label{
   /* single field label*/
 }
+
 </code></pre>
 
 <h3>Multiple value fields </h3>
@@ -165,6 +168,7 @@ if theres a label, the field-item is following the fields data. All depending th
   &lt;div class=&quot;field-item&quot;&gt;one &lt;/div&gt;
   &lt;div class=&quot;field-item&quot;&gt;two&lt;/div&gt;
 &lt;/div&gt;
+
 </code></pre>
 
 <pre><code>
@@ -175,6 +179,7 @@ if theres a label, the field-item is following the fields data. All depending th
     &lt;div class=&quot;field-item&quot;&gt;data two&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
+
 </code></pre>
 <p>
 <b>.field-multiple</b> is always added to the outer wrapper. <br>
@@ -184,7 +189,7 @@ If theres a label, .field-items is following the field-items . All depending the
 
 <pre><code>
 /* --- Field Item --------------------------*/
-.field-item{  
+.field-item{
   /* default for all field-item */
 }
 
@@ -196,7 +201,7 @@ If theres a label, .field-items is following the field-items . All depending the
   /* multiple field-item's with no label */
 }
 
-.field-multiple .field-item, 
+.field-multiple .field-item,
 .field-multiple.field-items,
 .field-items .field-item{
   /* multiple field-item */
@@ -211,6 +216,7 @@ If theres a label, .field-items is following the field-items . All depending the
 .field-multiple .field-label{
   /* single field label*/
 }
+
 </code></pre>
 
 
@@ -222,21 +228,23 @@ If theres a label, .field-items is following the field-items . All depending the
   &lt;div class=&quot;field-label&quot;&gt;label&lt;/div&gt;
   ....
 &lt;/div&gt;
+
 </code></pre>
 
 <pre><code>
-.field-label-hidden{ 
+.field-label-hidden{
   /* label is set to hidden from the ui & is not printed out */
 
 }
 
-.field-label-above{ 
+.field-label-above{
   /* label set to above from the ui */
 }
 
-.field-label-inline{ 
+.field-label-inline{
   /* label set to be inline from the ui */
 }
+
 </code></pre>
 
 
@@ -250,14 +258,14 @@ If theres a label, .field-items is following the field-items . All depending the
 .test-inline .field-label{
   font-weight: bold;
 }
-.test-inline .field-label:after{ 
+.test-inline .field-label:after{
  content: " :";
 }
 .test-inline .field-item{ font-style: italic;}
 
 /* inline field labels */
 .test-inline .field-label-inline .field-label{
-  vertical-align: top; 
+  vertical-align: top;
   display:inline-block;
   color:black;
 }
@@ -303,7 +311,7 @@ If theres a label, .field-items is following the field-items . All depending the
     <div class="field-item">Data</div>
   </div>
 
-  
+
   <!-- single inline label  -->
   <div class="field-single field field-label-above">
     <div class="field-label">label above</div>
@@ -328,7 +336,7 @@ If theres a label, .field-items is following the field-items . All depending the
       <div class="field-item">data</div>
     </div>
   </div>
-  
+
 
 
   <div class="test-item-inline">
@@ -376,14 +384,14 @@ If theres a label, .field-items is following the field-items . All depending the
 .field-label{
   font-weight: bold;
 }
-.field-label:after{ 
+.field-label:after{
  content: " :";
 }
 .field-item{ font-style: italic;}
 
 /* inline field labels */
 .field-label-inline .field-label{
-  vertical-align: top; 
+  vertical-align: top;
   display:inline-block;
   color:black;
 }
@@ -416,6 +424,7 @@ If theres a label, .field-items is following the field-items . All depending the
 .test-item-inline .field-items .field-item{
   display: inline-block;
 }
+
 </code></pre>
 
 <h2>Field Display test: fLoats </h2>
@@ -425,14 +434,14 @@ If theres a label, .field-items is following the field-items . All depending the
 .test-float .field-label{
   font-weight: bold;
 }
-.test-float .field-label:after{ 
+.test-float .field-label:after{
  content: " :";
 }
 .test-float .field-item{ font-style: italic;}
 
 /* inline field labels */
 .test-float .field-label-inline .field-label{
-  vertical-align: top; 
+  vertical-align: top;
   float:left;
   color:black;
 }
@@ -453,7 +462,7 @@ If theres a label, .field-items is following the field-items . All depending the
 /* clearfixin used for an inline label with multiple fields */
 .test-float .field-label-inline.field-multiple:before,
 .test-float .field-label-inline.field-multiple:after {
-  content:""; display:table; 
+  content:""; display:table;
 }
 .test-float .field-label-inline.field-multiple:after {
   clear:both;
@@ -487,7 +496,7 @@ If theres a label, .field-items is following the field-items . All depending the
   </div>
 
 
-  
+
   <!-- single inline label  -->
   <div class="field-single field field-label-above">
     <div class="field-label">label above</div>
@@ -512,7 +521,7 @@ If theres a label, .field-items is following the field-items . All depending the
       <div class="field-item">data</div>
     </div>
   </div>
-  
+
 
 
   <div class="test-item-inline">
@@ -570,6 +579,7 @@ Drupals markup make sense when a field always have multiple values. <br>
     &lt;div class=&quot;field-item even&quot;&gt;data&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
+
 </code></pre>
 <p>
 <code>.field-items .field-item{ }</code> targets both multiple & single .field-item<br>
@@ -586,6 +596,7 @@ Heavy cruft (divitis) 3 wrappers where only one is needed.<br>
     &lt;div class=&quot;field-item even&quot;&gt;data&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
+
 </code></pre>
 
 <p>
@@ -603,7 +614,8 @@ div.field-items is cruft <br>
     &lt;div class=&quot;field-item even&quot;&gt;data&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
-</code></pre> 
+
+</code></pre>
 <p>
 .cleafix hardcoded, makes the field less flexible <br>
 .field-label have no idea of the single vs multiple values <br>
@@ -622,6 +634,7 @@ div.field-items is cruft<br>
     &lt;div class=&quot;field-item even&quot;&gt;data3&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
+
 </code></pre>
 <p>
 div.field-items is cruft (combine it with .field)
@@ -638,6 +651,7 @@ div.field-items is cruft (combine it with .field)
     &lt;div class=&quot;field-item even&quot;&gt;data3&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
+
 </code></pre>
 <p>
 field-label dont know if its a single or multiple field
@@ -653,9 +667,10 @@ field-label dont know if its a single or multiple field
     &lt;div class=&quot;field-item even&quot;&gt;data3&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
+
 </code></pre>
 <p>
-.clearfix added <br>  
+.clearfix added <br>
 .field-label dont know about the fields multiple single
 </p>
 
